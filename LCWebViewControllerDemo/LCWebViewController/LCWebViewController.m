@@ -7,6 +7,7 @@
 //
 
 #import "LCWebViewController.h"
+//#import "IonIcons.h"
 
 #define VIEW_WIDTH self.view.bounds.size.width
 
@@ -21,6 +22,11 @@
  *  进度条
  */
 @property (nonatomic, strong) UIProgressView *progressView;
+
+/**
+ *  工具条
+ */
+@property (nonatomic, strong) UIToolbar *toolBar;
 
 /**
  *  是否正在加载
@@ -50,6 +56,14 @@
     [super viewWillDisappear:animated];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
+    if (self.progressTimer) {
+        
+        [self.progressTimer invalidate];
+        self.progressTimer = nil;
+    }
+    
+    [self.progressView removeFromSuperview];
 }
 
 - (void)viewDidLoad {
@@ -63,9 +77,11 @@
 
 - (void)setup {
     
+    // 设置标题
     if (self.webTitle && ![self.webTitle isEqualToString:@""]) self.title = self.webTitle;
     
     
+    // 设置webView
     self.webView = [[UIWebView alloc] init];
     self.webView.delegate = self;
     self.webView.frame    = self.view.bounds;
@@ -77,13 +93,24 @@
     [self.view addSubview:self.webView];
     
     
-    if (self.shouldHideProgressView) return;
-    self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
-    self.progressView.progressTintColor = self.progressTintColor ?: [UIColor greenColor];
-    self.progressView.trackTintColor = [UIColor clearColor];
-    self.progressView.frame = CGRectMake(0, self.py, self.view.frame.size.width, self.progressView.frame.size.height);
-    [self.progressView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
-    [self.view addSubview:self.progressView];
+    // 设置进度条
+    if (!self.shouldHideProgressView) {
+        
+        self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+        self.progressView.progressTintColor = self.progressTintColor ?: [UIColor greenColor];
+        self.progressView.trackTintColor = [UIColor clearColor];
+        self.progressView.frame = CGRectMake(0, self.py, self.view.frame.size.width, self.progressView.frame.size.height);
+        [self.progressView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin];
+        [self.view addSubview:self.progressView];
+    }
+    
+    
+//    if (!self.shouldHideToolBar) {
+//        
+//        self.toolBar = [[UIToolbar alloc] init];
+//        self.toolBar.items = @[];
+////        self.toolBar.frame = CGRectMake(0, self, <#CGFloat width#>, <#CGFloat height#>);
+//    }
 }
 
 - (void)loadURLString:(NSString *)URLString {
@@ -108,7 +135,8 @@
     
     if (self = [super init]) {
         
-        
+        self.webTitle  = title;
+        self.URLString = URLString;
     }
     
     return self;
@@ -118,13 +146,11 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    NSLog(@"1--%@", request.URL.absoluteString);
-    
     if (![self isAppURL:request.URL]) {
         
         if (!self.shouldHideProgressView) {
             
-            [self fakeProgressViewStartLoading];
+            [self progressViewStartLoading];
         }
         
         return YES;
@@ -133,9 +159,10 @@
         
         self.thirdAppURL = request.URL;
         
+//        NSLog(@"1--%@", request.URL.absoluteString);
         
         [[[UIAlertView alloc] initWithTitle:@"跳转提示"
-                                   message:@"这个网页试图跳转到另一个App，你确定要跳转吗？"
+                                   message:@"检测到网页可能试图跳转到另一个App，你确定要执行跳转吗？"
                                   delegate:self
                          cancelButtonTitle:@"取消"
                          otherButtonTitles:@"跳转", nil] show];
@@ -152,17 +179,15 @@
     
     if(!self.webView.isLoading && !self.shouldHideProgressView) {
         
-        [self fakeProgressBarStopLoading];
+        [self progressBarStopLoading];
     }
-    
-    NSLog(@"2--%@", webView.request.URL.absoluteString);
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     
     if (!self.shouldHideProgressView) {
         
-        [self fakeProgressBarStopLoading];
+        [self progressBarStopLoading];
     }
 }
 
@@ -180,49 +205,59 @@
     return ![validSchemes containsObject:URL.scheme];
 }
 
-#pragma mark - Fake Progress Bar Control (UIWebView)
+#pragma mark - 处理进度条
 
-- (void)fakeProgressViewStartLoading {
+- (void)progressViewStartLoading {
     
 //    [self.progressView setProgress:0.0f animated:NO];
     [self.progressView setAlpha:1.0f];
     
     if(!self.progressTimer) {
-        self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f/60.0f target:self selector:@selector(fakeProgressTimerDidFire:) userInfo:nil repeats:YES];
+        
+        self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1 / 60.0f
+                                                              target:self
+                                                            selector:@selector(progressTimerDidFire:)
+                                                            userInfo:nil
+                                                             repeats:YES];
     }
 }
 
-- (void)fakeProgressBarStopLoading {
+- (void)progressBarStopLoading {
     
     if(self.progressTimer) {
+        
         [self.progressTimer invalidate];
         self.progressTimer = nil;
     }
     
     if(self.progressView) {
+        
         [self.progressView setProgress:1.0f animated:YES];
+        
         [UIView animateWithDuration:0.3f delay:0.3f options:UIViewAnimationOptionCurveEaseOut animations:^{
+            
             [self.progressView setAlpha:0.0f];
+            
         } completion:^(BOOL finished) {
+            
             [self.progressView setProgress:0.0f animated:NO];
         }];
     }
 }
 
-- (void)fakeProgressTimerDidFire:(id)sender {
+- (void)progressTimerDidFire:(id)sender {
     
-    CGFloat increment = 0.005/(self.progressView.progress + 0.2);
+    CGFloat increment = 0.005 / (self.progressView.progress + 0.2f);
+    
     if([self.webView isLoading]) {
+        
         CGFloat progress = (self.progressView.progress < 0.75f) ? self.progressView.progress + increment : self.progressView.progress + 0.0005;
+        
         if(self.progressView.progress < 0.9) {
+            
             [self.progressView setProgress:progress animated:YES];
         }
     }
-}
-
-- (NSUInteger)supportedInterfaceOrientations {
-    
-    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 #pragma mark - Interface Orientation

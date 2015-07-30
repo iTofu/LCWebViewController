@@ -47,25 +47,25 @@
  */
 @property (nonatomic, strong) UIColor *progressTintColor;
 
-/**
- *  是否隐藏工具条
- */
-@property (nonatomic, assign, getter=shouldHideToolBar) BOOL hideToolBar;
-
-/**
- *  工具条主题色
- */
-@property (nonatomic, strong) UIColor *toolBarTintColor;
-
-/**
- *  工具条高度
- */
-@property (nonatomic, assign) CGFloat toolBarHeight;
-
-/**
- *  自定义工具条(若设置该属性, showToolBar属性将失效)
- */
-@property (nonatomic, weak) UIView *customToolBar;
+///**
+// *  是否隐藏工具条
+// */
+//@property (nonatomic, assign, getter=shouldHideToolBar) BOOL hideToolBar;
+//
+///**
+// *  工具条主题色
+// */
+//@property (nonatomic, strong) UIColor *toolBarTintColor;
+//
+///**
+// *  工具条高度
+// */
+//@property (nonatomic, assign) CGFloat toolBarHeight;
+//
+///**
+// *  自定义工具条(若设置该属性, showToolBar属性将失效)
+// */
+//@property (nonatomic, weak) UIView *customToolBar;
 
 #pragma mark - 方法
 

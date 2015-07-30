@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B39F87CF1B6A061000853BE9 /* IonIcons.m in Sources */ = {isa = PBXBuildFile; fileRef = B39F87CB1B6A061000853BE9 /* IonIcons.m */; };
+		B39F87D01B6A061000853BE9 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B39F87CC1B6A061000853BE9 /* ionicons.ttf */; };
+		B39F87D11B6A061000853BE9 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B39F87CD1B6A061000853BE9 /* LICENSE */; };
+		B39F87D21B6A061000853BE9 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B39F87CE1B6A061000853BE9 /* README.md */; };
 		B3DF16D71B68ADA7006B4F28 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DF16D61B68ADA7006B4F28 /* main.m */; };
 		B3DF16DA1B68ADA7006B4F28 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DF16D91B68ADA7006B4F28 /* AppDelegate.m */; };
 		B3DF16DD1B68ADA7006B4F28 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3DF16DC1B68ADA7006B4F28 /* ViewController.m */; };
@@ -28,6 +32,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B39F87C91B6A061000853BE9 /* ionicons-codes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ionicons-codes.h"; sourceTree = "<group>"; };
+		B39F87CA1B6A061000853BE9 /* IonIcons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IonIcons.h; sourceTree = "<group>"; };
+		B39F87CB1B6A061000853BE9 /* IonIcons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IonIcons.m; sourceTree = "<group>"; };
+		B39F87CC1B6A061000853BE9 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
+		B39F87CD1B6A061000853BE9 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B39F87CE1B6A061000853BE9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B3DF16D11B68ADA7006B4F28 /* LCWebViewControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LCWebViewControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3DF16D51B68ADA7006B4F28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3DF16D61B68ADA7006B4F28 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -63,6 +73,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B39F87C81B6A061000853BE9 /* ionicons */ = {
+			isa = PBXGroup;
+			children = (
+				B39F87C91B6A061000853BE9 /* ionicons-codes.h */,
+				B39F87CA1B6A061000853BE9 /* IonIcons.h */,
+				B39F87CB1B6A061000853BE9 /* IonIcons.m */,
+				B39F87CC1B6A061000853BE9 /* ionicons.ttf */,
+				B39F87CD1B6A061000853BE9 /* LICENSE */,
+				B39F87CE1B6A061000853BE9 /* README.md */,
+			);
+			path = ionicons;
+			sourceTree = "<group>";
+		};
 		B3DF16C81B68ADA7006B4F28 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +149,7 @@
 		B3DF16FA1B68ADAE006B4F28 /* LCWebViewController */ = {
 			isa = PBXGroup;
 			children = (
+				B39F87C81B6A061000853BE9 /* ionicons */,
 				B3DF16FB1B68AF8A006B4F28 /* LCWebViewController.h */,
 				B3DF16FC1B68AF8A006B4F28 /* LCWebViewController.m */,
 			);
@@ -214,7 +238,9 @@
 			files = (
 				B3DF16E01B68ADA7006B4F28 /* Main.storyboard in Resources */,
 				B3DF16E51B68ADA7006B4F28 /* LaunchScreen.xib in Resources */,
+				B39F87D01B6A061000853BE9 /* ionicons.ttf in Resources */,
 				B3DF16E21B68ADA7006B4F28 /* Images.xcassets in Resources */,
+				B39F87D11B6A061000853BE9 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,7 +258,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B39F87D21B6A061000853BE9 /* README.md in Sources */,
 				B3DF16FD1B68AF8A006B4F28 /* LCWebViewController.m in Sources */,
+				B39F87CF1B6A061000853BE9 /* IonIcons.m in Sources */,
 				B3DF16DD1B68ADA7006B4F28 /* ViewController.m in Sources */,
 				B3DF16DA1B68ADA7006B4F28 /* AppDelegate.m in Sources */,
 				B3DF16D71B68ADA7006B4F28 /* main.m in Sources */,

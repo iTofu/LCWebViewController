@@ -12,7 +12,7 @@
 /**
  *  测试网址
  */
-static NSString * TestURLString = @"http://www.sina.com";
+static NSString * TestURLString = @"http://weibo.cn/CoderLeo";
 
 @interface ViewController ()
 
@@ -34,15 +34,15 @@ static NSString * TestURLString = @"http://www.sina.com";
         
         // Push a LCWebViewController
         LCWebViewController *webVC = [[LCWebViewController alloc] init];
+        webVC.webTitle = @"这是缺省标题";
         webVC.URLString = TestURLString;
-        webVC.hideProgressView = NO;
+        webVC.progressTintColor = [UIColor redColor];
         [self.navigationController pushViewController:webVC animated:YES];
         
     } else if (indexPath.section == 1) {
         
         // Modal a LCWebViewController
-        LCWebViewController *webVC = [[LCWebViewController alloc] init];
-        webVC.URLString = TestURLString;
+        LCWebViewController *webVC = [LCWebViewController webViewControllerWithTitle:nil URLString:TestURLString];
         [self presentViewController:webVC
                            animated:YES
                          completion:nil];
